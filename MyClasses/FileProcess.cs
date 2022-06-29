@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 
 namespace MyClasses
 {
-    class FileProcess
+    public class FileProcess
     {
-
         public bool FileExists(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                throw new ArgumentException("fileName");
+                throw new ArgumentNullException("fileName");
             }
-
             return File.Exists(fileName);
+
         }
     }
 }

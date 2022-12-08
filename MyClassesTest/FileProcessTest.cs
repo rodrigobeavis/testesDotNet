@@ -14,16 +14,56 @@ namespace MyClassesTest
         private const string BAD_FILE_NAME = @"C:\Regedit.exe";
         private string _GoodFileName;
 
+        public TestContext TestContext { get; set; }
+
+        #region Test Initializa e Cleanup
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            if (TestContext.TestName == "FileNameDoesExists")
+            {
+                SetGoodFileName();
+                if (!string.IsNullOrEmpty(_GoodFileName))
+                {
+                    
+                    TestContext.WriteLine($"Creating File: {_GoodFileName}");
+                    File.AppendAllText(_GoodFileName, "Some Text");
+                }
+            }
+        }
+
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            if (TestContext.TestName == "FileNameDoesExists")
+            {
+                if (!string.IsNullOrEmpty(_GoodFileName))
+                {
+                    TestContext.WriteLine($"Delete File: {_GoodFileName}");
+                    File.Delete(_GoodFileName);
+                }
+            }
+        }
+
+
+
+        #endregion
+
         [TestMethod]
+        [Owner("RodrigoB")]
+        [TestCategory("No Exception")]
+        [Priority(3)]
         public void FileNameDoesExists()
         {
             FileProcess fp = new FileProcess();
             bool fromCall;
 
-            SetGoodFileName();
-            File.AppendAllText(_GoodFileName, "Some Text");
+           
+            TestContext.WriteLine($"Testing File: {_GoodFileName} ");
             fromCall = fp.FileExists(_GoodFileName);
-
+          
             Assert.IsTrue(fromCall);
         }
 
@@ -43,6 +83,10 @@ namespace MyClassesTest
 
 
         [TestMethod]
+        [Description("Verificar se o arquivo existe ")]
+        [TestCategory("No Exception")]
+        [Priority(3)]
+        [Owner("Rodrigo")]
         public void FileNameDoesNotExists()
         {
 
@@ -57,6 +101,9 @@ namespace MyClassesTest
         }
 
         [TestMethod]
+        [Priority(2)]
+        [Owner("Rodrigo")]
+        [TestCategory("No Exception")]
         [ExpectedException(typeof(ArgumentNullException))]
         public void FileNameNullOrEmpty_ThrowsNewArgumentNullException()
         {
@@ -69,6 +116,9 @@ namespace MyClassesTest
 
 
         [TestMethod]
+        [Priority(1)]
+        [Owner("RodrigoB")]
+        [TestCategory("Exception")]
         public void FileNameNullOrEmpty_ThrowsNewArgumentNullException_UsingTryCatch()
         {
             FileProcess fp = new FileProcess();
@@ -88,6 +138,38 @@ namespace MyClassesTest
 
         }
 
+        [TestMethod]
+        [Timeout(3100)]
+        [Priority(0)]
+        [TestCategory("TimeOut")]
+        [Owner("RodrigoT")]
+        public void SimulateTimeout()
+        {
+            System.Threading.Thread.Sleep(3000);
+        }
+
+
+
+        private const string FILE_NAME = @"FileToDeploy.txt";
+
+        [TestMethod]
+        [Timeout(3100)]
+        [Priority(0)]
+        [TestCategory("TimeOut")]
+        [Owner("RodrigoFile")]
+        [DeploymentItem(FILE_NAME)]
+        public void FileNameDoesExistsUsingDeploymentItem()
+        {
+            FileProcess fp = new FileProcess();
+            string fileName;
+            bool fromCall;
+
+            fileName = $@"{TestContext.DeploymentDirectory}\{FILE_NAME}";
+            TestContext.WriteLine($"Checking File: {fileName} ");
+            fromCall = fp.FileExists(fileName);
+
+            Assert.IsTrue(fromCall);
+        }
 
 
     }

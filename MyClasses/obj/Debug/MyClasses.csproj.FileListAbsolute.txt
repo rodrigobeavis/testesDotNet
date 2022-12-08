@@ -1,6 +1,6 @@
 E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\bin\Debug\MyClasses.dll
 E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\bin\Debug\MyClasses.pdb
-E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\obj\Debug\MyClasses.csproj.AssemblyReference.cache
 E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\obj\Debug\MyClasses.csproj.CoreCompileInputs.cache
 E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\obj\Debug\MyClasses.dll
 E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\obj\Debug\MyClasses.pdb
+E:\NET\source\repos\MeuPrimeiroTeste\MyClasses\obj\Debug\MyClasses.csproj.AssemblyReference.cache
